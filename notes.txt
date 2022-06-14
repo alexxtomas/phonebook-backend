@@ -14,3 +14,6 @@ The paths will depend on each case
 
 Now, In the development mode will not work beacuse the realtive routes
 We can to add a proxy under the scripts in package.json -> "proxy": "http://localhost:3000"
+
+
+To deploy backend see notes-api-backend/notes.txt
