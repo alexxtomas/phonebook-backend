@@ -1,1 +1,16 @@
-:method :url :status :total-time[digits] :req[header]
+In the root of the react app run -> npm run build
+Copy file build to the backend root
+Add static middleware to the index.js in the backend -> app.use(express.static('build')) 
+
+url/index.html to see the frontend 
+
+For each upadate in the front-end we have to make the same process. We can add some scripts on the package.json in the front-end ->
+"build:ui": "rm -rf build && cd ../part2-notes/ && npm run build && cp -r build ../notes-backend",
+ "deploy": "git push heroku main",
+ "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && npm run deploy",    
+ "logs:prod": "heroku logs --tail"
+
+The paths will depend on each case
+
+Now, In the development mode will not work beacuse the realtive routes
+We can to add a proxy under the scripts in package.json -> "proxy": "http://localhost:3000"
