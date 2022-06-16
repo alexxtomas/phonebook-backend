@@ -5,6 +5,8 @@ const express = require('express')
 const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/Person.js')
+const notfound = require('./middleware/notfound.js')
+const errorHandler = require('./middleware/errorHandler.js')
 
 const app = express()
 app.use(express.json())
@@ -63,6 +65,23 @@ app.post('/api/persons', morgan(':method :url :status :res[content-length] - :re
     .then(savedNote => res.json(savedNote))
     .catch(err => next(err))
 })
+
+app.put('/api/persons/:id', (req, res, next) => {
+  const { id } = req.params
+  const person = req.body
+  console.log(person)
+
+  const newPersonInfo = {
+    name: person.name,
+    number: person.number
+  }
+  Person.findByIdAndUpdate(id, newPersonInfo, { new: true })
+    .then(result => res.json(result))
+    .catch(err => next(err))
+})
+
+app.use(errorHandler)
+app.use(notfound)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
