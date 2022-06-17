@@ -50,12 +50,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
 app.post('/api/persons', morgan(':method :url :status :res[content-length] - :response-time ms :body'), (req, res, next) => {
   const person = req.body
 
-  if (!person.name || !person.number) {
-    res.status(400).json({
-      error: 'required "name" or "number" is missing'
-    })
-  }
-
   const newPerson = new Person({
     name: person.name,
     number: person.number

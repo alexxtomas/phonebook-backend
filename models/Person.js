@@ -1,8 +1,22 @@
 const { Schema, model } = require('mongoose')
 
 const phonebookSchema = new Schema({
-  name: String,
-  number: Number
+  name: {
+    type: String,
+    minLength: 3,
+    required: true
+  },
+  number: {
+    type: String,
+    minLength: 8,
+    validate: {
+      validator: v => {
+        return /\d{3}-\d*/.test(v)
+      },
+      message: props => `${props.value} is not a valid phone number!`
+    },
+    required: true
+  }
 })
 
 phonebookSchema.set('toJSON', {
